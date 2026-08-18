@@ -373,7 +373,6 @@ def analyze():
         </html>
         ''')
     
-    # POST işlemi - DÜZELTİLDİ!
     user_id = session['user_id']
     data = request.get_json()
     
