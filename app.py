@@ -67,11 +67,10 @@ def home():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>MarketPilotAI - Ücretsiz Pazar Analizi</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MarketPilotAI</title>
         <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f7fafc; }
+            body { font-family: Arial, sans-serif; background: #f7fafc; }
             .navbar { background: #2d3748; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
             .logo { font-size: 22px; font-weight: bold; }
             .logo span { color: #48bb78; }
@@ -102,7 +101,7 @@ def home():
         <div class="container">
             <div class="hero">
                 <h1>🚀 Ücretsiz Akıllı Pazar Analizi</h1>
-                <p>15 strateji, PMF matematiği ve etki analizi ile doğru kararlar alın.</p>
+                <p>15 strateji ile doğru kararlar alın.</p>
                 <a href="/register" class="btn btn-primary">🚀 Hemen Başla</a>
             </div>
             <div class="grid">
@@ -110,7 +109,7 @@ def home():
                 <div class="card"><div class="card-icon">🧮</div><h3>PMF Matematiği</h3></div>
                 <div class="card"><div class="card-icon">🌍</div><h3>Etki Skoru</h3></div>
             </div>
-            <div class="footer"><p>© 2025 MarketPilotAI - Ücretsiz Sürüm</p></div>
+            <div class="footer"><p>© 2025 MarketPilotAI</p></div>
         </div>
     </body>
     </html>
@@ -122,7 +121,7 @@ def register():
         return render_template_string('''
         <!DOCTYPE html>
         <html>
-        <head><title>Ücretsiz Kayıt</title>
+        <head><title>Kayıt</title>
         <style>
             body { font-family: Arial; background: #f7fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
             .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 380px; }
@@ -137,12 +136,12 @@ def register():
         </head>
         <body>
             <div class="card">
-                <h2>📝 Ücretsiz Kayıt</h2>
+                <h2>📝 Kayıt Ol</h2>
                 <form method="POST">
                     <input type="text" name="name" placeholder="Ad Soyad" required>
                     <input type="email" name="email" placeholder="Email" required>
                     <input type="password" name="password" placeholder="Şifre" required minlength="6">
-                    <button type="submit" class="btn">🚀 Ücretsiz Başla</button>
+                    <button type="submit" class="btn">🚀 Kayıt Ol</button>
                 </form>
                 <div class="link">Hesabın var mı? <a href="/login">Giriş Yap</a></div>
             </div>
@@ -173,7 +172,7 @@ def login():
         return render_template_string('''
         <!DOCTYPE html>
         <html>
-        <head><title>Giriş Yap</title>
+        <head><title>Giriş</title>
         <style>
             body { font-family: Arial; background: #f7fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
             .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 380px; }
@@ -194,7 +193,7 @@ def login():
                     <input type="password" name="password" placeholder="Şifre" required>
                     <button type="submit" class="btn">Giriş Yap</button>
                 </form>
-                <div class="link">Hesabın yok mu? <a href="/register">Ücretsiz Kayıt Ol</a></div>
+                <div class="link">Hesabın yok mu? <a href="/register">Kayıt Ol</a></div>
             </div>
         </body>
         </html>
@@ -374,21 +373,30 @@ def analyze():
         </html>
         ''')
     
+    # POST işlemi - DÜZELTİLDİ!
     user_id = session['user_id']
     data = request.get_json()
     
     product_name = data.get("product_name", "Bilinmeyen Ürün")
     score = random.randint(45, 95)
     
-    if score >= 80: status = "EXCELLENT"
-    elif score >= 60: status = "GOOD"
-    elif score >= 40: status = "WARNING"
-    else: status = "CRITICAL"
+    if score >= 80:
+        status = "EXCELLENT"
+    elif score >= 60:
+        status = "GOOD"
+    elif score >= 40:
+        status = "WARNING"
+    else:
+        status = "CRITICAL"
     
-    if score >= 80: recommendation = "🚀 Güçlü lansman! Hemen başlayın!"
-    elif score >= 60: recommendation = "📈 Umut verici. Optimize edin ve başlayın!"
-    elif score >= 40: recommendation = "⚠️ Önce doğrulayın. Pazar araştırmasını derinleştirin."
-    else: recommendation = "🔍 Düşük öncelik. Pivot veya yeni pazar hedefleyin."
+    if score >= 80:
+        recommendation = "🚀 Güçlü lansman! Hemen başlayın!"
+    elif score >= 60:
+        recommendation = "📈 Umut verici. Optimize edin ve başlayın!"
+    elif score >= 40:
+        recommendation = "⚠️ Önce doğrulayın. Pazar araştırmasını derinleştirin."
+    else:
+        recommendation = "🔍 Düşük öncelik. Pivot veya yeni pazar hedefleyin."
     
     db.execute(
         "INSERT INTO analyses (user_id, product_name, analysis_data, score, status, created_at) VALUES (?, ?, ?, ?, ?, ?)",
